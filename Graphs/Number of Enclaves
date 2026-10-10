@@ -1,0 +1,75 @@
+class Solution {
+    class Pair{
+        int i;
+        int j;
+        Pair(int i,int j){
+            this.i=i;
+            this.j=j;
+        }
+    }
+    public int numEnclaves(int[][] grid) {
+        Queue<Pair> q=new LinkedList<>();
+        int m= grid.length;//rows
+        int n= grid[0].length;//cols
+        int [][] vis=new int[m][n];
+        // First column
+        for (int i = 0; i < m; i++) {
+            if (grid[i][0] == 1 && vis[i][0] == 0) {
+                q.add(new Pair(i, 0));
+                vis[i][0] = 1;
+            }
+        }
+
+        // Last row
+        for (int j = 0; j < n; j++) {
+            if (grid[m - 1][j] == 1 && vis[m - 1][j] == 0) {
+                q.add(new Pair(m - 1, j));
+                vis[m - 1][j] = 1;
+            }
+        }
+
+        // Last column
+        for (int i = 0; i < m; i++) {
+            if (grid[i][n - 1] == 1 && vis[i][n - 1] == 0) {
+                q.add(new Pair(i, n - 1));
+                vis[i][n - 1] = 1;
+            }
+        }
+        // First row
+        for (int j = 0; j < n; j++) {
+            if (grid[0][j] == 1 && vis[0][j] == 0) {
+                q.add(new Pair(0, j));
+                vis[0][j] = 1;
+            }
+        }
+
+        while(!q.isEmpty()){
+            Pair a=q.poll();
+            int x=a.i;
+            int y=a.j;
+            vis[x][y]=1;
+            bfs(x+1,y,vis,grid,q);
+            bfs(x,y+1,vis,grid,q);
+            bfs(x-1,y,vis,grid,q);
+            bfs(x,y-1,vis,grid,q);
+        }
+        int count=0;
+        for(int i=0;i<vis.length;i++){
+            for(int j=0;j<vis[i].length;j++){
+                if(grid[i][j]==1 && vis[i][j]!=1){
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+    public void bfs(int i,int j,int [][]vis , int [][]grid, Queue<Pair> q){
+        if(i < 0 || i >= grid.length || 
+          j < 0 || j >= grid[0].length) {
+        return;
+        }
+        if (grid[i][j] == 0 || vis[i][j] == 1) return;
+        vis[i][j] = 1;
+        q.add(new Pair(i, j));
+    }
+}
