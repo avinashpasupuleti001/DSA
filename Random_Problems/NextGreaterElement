@@ -1,0 +1,33 @@
+class Solution {
+    public int[] nextGreaterElement(int[] nums1, int[] nums2) {
+        ArrayList<Integer> al = new ArrayList<>();
+        ArrayList<Integer> ans = new ArrayList<>();
+
+        for (int i : nums2) {
+            al.add(i);
+        }
+
+        for (int i = 0; i < nums1.length; i++) {
+            int ele = nums1[i];
+            int index = al.indexOf(ele);
+            int greater = -1;
+
+            for (int m = index + 1; m < nums2.length; m++) {
+                if (nums2[m] > ele) {
+                    greater = nums2[m];
+                    break;
+                }
+            }
+
+            ans.add(greater);
+        }
+
+        int[] result = new int[nums1.length];
+
+        for (int i = 0; i < ans.size(); i++) {
+            result[i] = ans.get(i);
+        }
+
+        return result;
+    }
+}
