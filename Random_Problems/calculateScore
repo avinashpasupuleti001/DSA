@@ -1,0 +1,29 @@
+class Solution {
+    public int calculateScore(int a, int b) {
+        String s1="";
+        String s2="";
+        int ac=a;
+        int bc=b;
+        while(ac!=0){
+            int c=ac%2;
+            char ch=(char)('0'+ c);
+            s1+=ch;
+            ac=ac/2;
+        }
+        while(bc!=0){
+            int c=bc%2;
+            char ch=(char)('0'+ c);
+            s2+=ch;
+            bc=bc/2;
+        }
+        int c1=0,c2=0;
+        for(int i=0;i<s1.length();i++){
+            if(s1.charAt(i)=='1')c1++;
+        }
+        for(int i=0;i<s2.length();i++){
+            if(s2.charAt(i)=='1')c2++;
+        }
+        if(c1>=c2)return c1*c2;
+        else return c2/c1;
+    }
+}
