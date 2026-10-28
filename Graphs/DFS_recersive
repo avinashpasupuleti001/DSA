@@ -1,0 +1,31 @@
+class Solution {
+    public ArrayList<Integer> dfs(ArrayList<ArrayList<Integer>> adj) {
+        // code here
+        boolean visited[]=new boolean[adj.size()];
+        
+        Stack<Integer> st = new Stack<>();
+        st.add(0);
+        visited[0]=true;
+        
+        return dfstraverse(adj,visited,st);
+    } 
+    
+    
+    public ArrayList<Integer> dfstraverse(ArrayList<ArrayList<Integer>> adj,boolean visited[],Stack<Integer> st){
+       ArrayList<Integer> a=new ArrayList<>();
+       if(st.isEmpty()){
+           return a;
+       }
+       Integer ele=st.pop();
+       a.add(ele);
+       for(Integer x:adj.get(ele)){
+           if(visited[x]==false){
+           st.add(x);
+           visited[x]=true;
+           ArrayList<Integer> ans=dfstraverse(adj,visited,st);
+           a.addAll(ans);
+          }
+       }
+       return a;
+    }
+}
