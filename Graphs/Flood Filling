@@ -1,0 +1,27 @@
+class Solution {
+    public int[][] floodFill(int[][] image, int sr, int sc, int color) {
+      int ans[][]=new int[image.length][image[0].length];
+      int initial_color=image[sr][sc];
+      for(int i=0;i<image.length;i++){
+        for(int j=0;j<image[i].length;j++){
+            ans[i][j]=image[i][j];
+        }
+      }
+      traversal(ans,image,sr,sc,initial_color,color);
+      return ans;
+    }
+    public static void traversal(int ans[][],int image[][],int sr,int sc,int initial_color,int color){
+        if(sr<0 || sr >= image.length || sc<0 || sc >= image[0].length)return;
+        if(image[sr][sc]!=initial_color || ans[sr][sc]==color){
+            return;
+        }
+        if(image[sr][sc]==initial_color){
+            ans[sr][sc]=color;
+        }
+
+        traversal(ans,image,sr+1,sc,initial_color,color);
+        traversal(ans,image,sr,sc+1,initial_color,color);
+        traversal(ans,image,sr-1,sc,initial_color,color);
+        traversal(ans,image,sr,sc-1,initial_color,color);
+    }
+}
