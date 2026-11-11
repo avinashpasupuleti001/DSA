@@ -1,0 +1,52 @@
+class Solution {
+    class Node{
+        int row;
+        int col;
+        int step;
+        Node(int row,int col,int step){
+            this.row=row;
+            this.col=col;
+            this.step=step;
+        }
+    }
+    public int[][] updateMatrix(int[][] mat) {
+        int r=mat.length;
+        int c=mat[0].length;
+        int vis[][]=new int[r][c];
+        int dis[][]=new int[r][c];
+        Queue<Node> q=new LinkedList<>();
+        for(int i=0;i<r;i++){
+            for(int j=0;j<c;j++){
+                if(mat[i][j]==0){
+                    q.add(new Node(i,j,0));
+                    vis[i][j]=1;
+                }else {
+                    vis[i][j]=0;
+                }
+            }
+        }
+        bfsTraverse(vis,dis,mat,q);
+        return dis;
+    }
+    public  void bfsTraverse(int[][] vis,int[][] dis,int[][] mat,Queue<Node> q){
+        if(q.isEmpty()){
+            return;
+        }
+        Node temp=q.poll();
+        int r=temp.row;
+        int c=temp.col;
+        int s=temp.step;
+        dis[r][c]=s;
+        int delrow[]={-1,0,+1,0};
+        int delcol[]={0,+1,0,-1};
+        for(int i=0;i<4;i++){
+            int nrow=r+delrow[i];
+            int ncol=c+delcol[i];
+            if(nrow>=0 && nrow<mat.length && ncol>=0 && ncol < mat[0].length  &&vis[nrow][ncol] == 0){
+            q.add(new Node(nrow,ncol,s+1));
+            vis[nrow][ncol]=1;
+            }
+        }
+        bfsTraverse(vis,dis,mat,q);
+    }
+}
