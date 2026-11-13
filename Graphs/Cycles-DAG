@@ -1,0 +1,29 @@
+class Solution {
+    public boolean isCyclic(ArrayList<ArrayList<Integer>> adj){
+        // code here
+        int v=adj.size();
+        int vis[]=new int[v];
+        int pathvis[]=new int[v];
+        for(int i=0;i<v;i++){
+            if(vis[i]==0){
+                if(dfs(i,adj,vis,pathvis)==true)return true;
+            }
+        }
+        return false;
+    }
+    public static boolean dfs(int i,ArrayList<ArrayList<Integer>> adj,int[] vis,int[] pathvis){
+        vis[i]=1;
+        pathvis[i]=1;
+        
+        for(int a:adj.get(i)){
+            if(vis[a]==0){
+                if(dfs(a,adj,vis,pathvis)==true)return true;
+            }
+            else if(pathvis[a]==1){
+                return true;
+            }
+        }
+        pathvis[i]=0;
+        return false;
+    }
+}
