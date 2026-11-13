@@ -1,0 +1,41 @@
+class Solution {
+    public static boolean dfs(int i,ArrayList<ArrayList<Integer>> adj,int[] vis,int[] pathvis,int[] check){
+        vis[i]=1;
+        pathvis[i]=1; 
+        check[i]=0;
+        for(int a:adj.get(i)){
+            if(vis[a]==0){
+                if(dfs(a,adj,vis,pathvis,check)==true)return true;
+            }
+            else if(pathvis[a]==1){
+                return true;
+            }
+        }
+        check[i]=1;
+        pathvis[i]=0;
+        return false;
+     }
+   public List<Integer> eventualSafeNodes(int[][] graph) {
+      ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+       for (int i = 0; i < graph.length; i++) {
+        adj.add(new ArrayList<>());
+        for (int a : graph[i]) {
+            adj.get(i).add(a);
+        }
+        }
+        int v=adj.size();
+        int vis[]=new int[v];
+        int [] check=new int[v];
+        int pathvis[]=new int[v];
+        for(int i=0;i<v;i++){
+            if(vis[i]==0){
+                dfs(i,adj,vis,pathvis,check);
+            }
+        }
+        List<Integer> al=new ArrayList<>();
+        for(int i=0;i<v;i++){
+            if(check[i]==1)al.add(i);
+        }
+        return al;
+    }
+}
