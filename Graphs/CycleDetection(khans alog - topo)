@@ -1,0 +1,28 @@
+class Solution {
+    public boolean isCyclic(ArrayList<ArrayList<Integer>> adj){
+          int v=adj.size();
+           int indegree[]=new int[v];
+           for(int i=0;i<v;i++){
+               for(int at:adj.get(i)){
+                   indegree[at]++;
+               }
+           }
+           Queue<Integer> q=new LinkedList<>();
+           for(int i=0;i<v;i++){
+              if(indegree[i]==0){
+                  q.add(i);
+              }
+           }
+           int i=0;
+           int topo[]=new int[v];
+           while(!q.isEmpty()){
+               int ele=q.poll();
+               topo[i++]=ele;
+               for(int it:adj.get(ele)){
+                   indegree[it]--;
+                   if(indegree[it]==0)q.add(it);
+               }
+           }
+           return i != v;
+    }
+}
